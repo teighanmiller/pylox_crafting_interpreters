@@ -5,11 +5,22 @@ class Lox:
         pass
 
     def run_file(self, path):
-        pass
+        try:
+            with open(path, "r") as f:
+                data = f.readline()
+                _run(data)
+        except IOError as e:
+            print(f"Error reading file: {e}")
+            sys.exit(65)
 
-    def run_prompt():
-        pass
-            
+    def run_prompt(self):
+        while(True):
+            print("< ")
+            cmd = input()
+            if cmd is None:
+                break
+            _run(cmd)
+
 if __name__ == "__main___":
     lox = Lox()
 
