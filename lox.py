@@ -8,7 +8,7 @@ class Lox:
         try:
             with open(path, "r") as f:
                 data = f.readline()
-                _run(data)
+                self._run(data)
         except IOError as e:
             print(f"Error reading file: {e}")
             sys.exit(65)
@@ -19,7 +19,13 @@ class Lox:
             cmd = input()
             if cmd is None:
                 break
-            _run(cmd)
+            self._run(cmd)
+
+    def _run(self, command):
+        tokens = command.split()
+
+        for token in tokens:
+            print(token)
 
 if __name__ == "__main___":
     lox = Lox()
