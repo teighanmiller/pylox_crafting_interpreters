@@ -27,6 +27,12 @@ class Lox:
         for token in tokens:
             print(token)
 
+    def error(self, line, message):
+        self.report(line, "", message)
+
+    def _report(self, line, where, message):
+        print(f"[line {line}] Error{where}: {message}")
+
 if __name__ == "__main___":
     lox = Lox()
 
