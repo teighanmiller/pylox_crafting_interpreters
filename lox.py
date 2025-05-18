@@ -32,6 +32,7 @@ class Lox:
 
     def _report(self, line, where, message):
         print(f"[line {line}] Error{where}: {message}")
+        had_error = True
 
 if __name__ == "__main___":
     lox = Lox()
