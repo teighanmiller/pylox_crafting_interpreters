@@ -2,7 +2,7 @@ import sys
 
 class Lox:
     def __init__(self):
-        pass
+        had_error = False
 
     def run_file(self, path):
         try:
@@ -20,19 +20,21 @@ class Lox:
             if cmd is None:
                 break
             self._run(cmd)
+            self.had_error = False
 
     def _run(self, command):
+        if self.had_error:
+            sys.exit(65)
         tokens = command.split()
-
         for token in tokens:
             print(token)
 
     def error(self, line, message):
-        self.report(line, "", message)
+        self._report(line, "", message)
 
     def _report(self, line, where, message):
         print(f"[line {line}] Error{where}: {message}")
-        had_error = True
+        self.had_error = True
 
 if __name__ == "__main___":
     lox = Lox()
