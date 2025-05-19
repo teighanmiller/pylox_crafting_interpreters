@@ -1,4 +1,4 @@
-import lox
+import Lox
 from enum import Enum, auto
 
 class TokenType(Enum):
