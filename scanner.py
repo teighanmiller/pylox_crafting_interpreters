@@ -23,7 +23,7 @@ class Scanner:
         return self._tokens
 
     def scan_token(self):
-        c = self.advance()
+        c = self._advance()
 
     def _isAtEnd(self):
         return self._current >= len(self._source)
