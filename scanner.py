@@ -59,6 +59,20 @@ class Scanner:
             self._addToken(TokenType.LESS_EQAUL if self._match('=') else TokenType.LESS)
         elif c == '>':
             self._addToken(TokenType.GREATER_EQAUL if self._match('=') else TokenType.GREATER)
+        elif c == '/':
+            if self._match('/'):
+                while self._peek() != '\n' and not self._isAtEnd():
+                    self._advance()
+            else:
+                self._addToken(TokenType.SLASH)
+        elif c == ' ':
+            pass
+        elif c == '\r':
+            pass
+        elif c == '\t':
+            pass
+        elif c == '\n':
+            self._line += 1
         else:
             Lox.error(self._line, "Unexpected character.")
 
@@ -71,6 +85,11 @@ class Scanner:
 
         self._current += 1
         return True
+
+    def _peek(self):
+        if self._isAtEnd():
+            return '\0'
+        return self._source[self._current]
     
     def _advance(self):
         return self._source[self._current + 1]
