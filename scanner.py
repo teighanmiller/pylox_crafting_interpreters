@@ -30,18 +30,29 @@ class Scanner:
 
     def _scanToken(self):
         c = self._advance()
-        switcher = {
-            '(': self._addToken(TokenType.LEFT_PAREN),
-            ')': self._addToken(TokenType.RIGHT_PAREN),
-            '{': self._addToken(TokenType.LEFT_BRACE),
-            '}': self._addToken(TokenType.RIGHT_BRACE),
-            ',': self._addToken(TokenType.COMMA),
-            '.': self._addToken(TokenType.DOT),
-            '-': self._addToken(TokenType.MINUS),
-            '+': self._addToken(TokenType.PLUS),
-            ';': self._addToken(TokenType.SEMICOLON),
-            '*': self._addToken(TokenType.STAR),
-        }
+
+        if c == '(':
+            self._addToken(TokenType.LEFT_PAREN)
+        elif c == ')':
+            self._addToken(TokenType.RIGHT_PAREN)
+        elif c == '{':
+            self._addToken(TokenType.RIGHT_BRACE)
+        elif c == '}':
+            self._addToken(TokenType.LEFT_BRACE)
+        elif c == ',':
+            self._addToken(TokenType.COMMA)
+        elif c == '.':
+            self._addToken(TokenType.DOT)
+        elif c == '-':
+            self._addToken(TokenType.MINUS)
+        elif c == '+':
+            self._addToken(TokenType.PLUS)
+        elif c == ';':
+            self._addToken(TokenType.SEMICOLON)
+        elif c == '*':
+            self._addToken(TokenType.STAR)
+        else:
+            Lox.error(self._line, "Unexpected character.")
     
     def _advance(self):
         return self._source[self._current + 1]
