@@ -27,4 +27,29 @@ class Scanner:
 
     def _isAtEnd(self):
         return self._current >= len(self._source)
+
+    def _scanToken(self):
+        c = self._advance()
+        switcher = {
+            '(': self._addToken(TokenType.LEFT_PAREN),
+            ')': self._addToken(TokenType.RIGHT_PAREN),
+            '{': self._addToken(TokenType.LEFT_BRACE),
+            '}': self._addToken(TokenType.RIGHT_BRACE),
+            ',': self._addToken(TokenType.COMMA),
+            '.': self._addToken(TokenType.DOT),
+            '-': self._addToken(TokenType.MINUS),
+            '+': self._addToken(TokenType.PLUS),
+            ';': self._addToken(TokenType.SEMICOLON),
+            '*': self._addToken(TokenType.STAR),
+        }
+    
+    def _advance(self):
+        return self._source[self._current + 1]
+
+    def _addToken(self, type: TokenType):
+        self._addToken(type, None)
+
+    def _addToken(self, type: TokenType, literal: object):
+        text = self._source[self._start:self._current]
+        self._tokens.append(Token(type, text, literal, self._line))
         
