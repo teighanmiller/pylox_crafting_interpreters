@@ -76,7 +76,22 @@ class Scanner:
         elif c == '"':
             self._string()
         else:
-            Lox.error(self._line, "Unexpected character.")
+            if self._isDigit(c):
+                self._number()
+            else:
+                Lox.error(self._line, "Unexpected character.")
+
+    def _number(self):
+        while self._isDigit(self._peek()):
+            self._advance()
+
+        if self._peek() == '.' and self._isDigit(self._peekNext()):
+            self._advance()
+
+            while self._isDigit(self._peek()):
+                self._advance()
+
+        self._addToken(TokenType.NUMBER, float(self._source[self._start, self._current]))
 
     def _string(self):
         while self._peek != '"' and not self._isAtEnd():
@@ -90,10 +105,9 @@ class Scanner:
         # The closing ".
         self._advance()
 
+        # Trim the surrounding quotes
         value = self._source[self._start + 1: self._current - 1]
         self._addToken(TokenType.STRING, value)
-
-
 
     def _match(self, expected: str):
         if self._isAtEnd():
@@ -109,6 +123,14 @@ class Scanner:
         if self._isAtEnd():
             return '\0'
         return self._source[self._current]
+
+    def _peekNext(self):
+        if self._current + 1 >= len(self._source):
+            return '\0'
+        return self._source[self._current + 1]
+
+    def _isDigit(self, c: str) -> bool:
+       return c >= '0' and c <= '9'
     
     def _advance(self):
         return self._source[self._current + 1]
