@@ -78,8 +78,19 @@ class Scanner:
         else:
             if self._isDigit(c):
                 self._number()
+            elif self._isAlpha(c):
+                self._indentifier()
             else:
                 Lox.error(self._line, "Unexpected character.")
+
+    def _identifier(self):
+        while(self._isAlphaNumeric(self._peek())):
+            self._advance()
+        text = self._source[self._start:self._current]
+        typ = self._keywords.get('text')
+        if typ == None:
+            typ = TokenType.INDENTIFIER
+        self._addToken(typ)
 
     def _number(self):
         while self._isDigit(self._peek()):
@@ -129,6 +140,12 @@ class Scanner:
             return '\0'
         return self._source[self._current + 1]
 
+    def _isAlphaNumeric(self, c):
+        return self._isAlpha(c) or self._isDigit(c)
+    
+    def _isAlpha(self, c):
+        return (c >= 'a' and c <= 'z') or (c >= 'A' and c <= 'Z') or (c == '_')
+
     def _isDigit(self, c: str) -> bool:
        return c >= '0' and c <= '9'
     
@@ -141,4 +158,23 @@ class Scanner:
     def _addToken(self, type: TokenType, literal: object):
         text = self._source[self._start:self._current]
         self._tokens.append(Token(type, text, literal, self._line))
+
+    _keywords = {
+        "and": TokenType.AND,
+        "class": TokenType.CLASS,
+        "else": TokenType.ELSE,
+        "false": TokenType.FALSE,
+        "for": TokenType.FOR,
+        "fun": TokenType.FUN,
+        "if": TokenType.IF,
+        "nil": TokenType.NIL,
+        "or": TokenType.OR,
+        "print": TokenType.PRINT,
+        "return": TokenType.RETURN,
+        "super": TokenType.SUPER,
+        "this": TokenType.THIS,
+        "true": TokenType.TRUE,
+        "var": TokenType.VAR,
+        "while": TokenType.WHILE
+    }
         
