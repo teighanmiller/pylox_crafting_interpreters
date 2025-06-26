@@ -2,7 +2,7 @@ import sys
 
 class Lox:
     def __init__(self):
-        had_error = False
+        self.had_error = False
 
     def run_file(self, path):
         try:
@@ -16,13 +16,15 @@ class Lox:
             sys.exit(65)
 
     def run_prompt(self):
+        # Put out shell syntax when Lox.py is called
         while(True):
             cmd = input("> ")
-            if cmd is None:
+            if cmd == "exit":
                 break
             self._run(cmd)
             self.had_error = False
 
+    # Run command given
     def _run(self, command):
         if self.had_error:
             sys.exit(65)
