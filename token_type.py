@@ -1,4 +1,3 @@
-import Lox
 from enum import Enum, auto
 
 class TokenType(Enum):
@@ -34,7 +33,7 @@ class TokenType(Enum):
     AND = auto()
     CLASS = auto()
     ELSE = auto()
-    FAlSE = auto()
+    FALSE = auto()
     FUN = auto()
     FOR = auto()
     IF = auto()
@@ -48,3 +47,6 @@ class TokenType(Enum):
     VAR = auto()
     WHILE = auto()
     EOF = auto()
+
+    def __str__(self):
+        return self.name
